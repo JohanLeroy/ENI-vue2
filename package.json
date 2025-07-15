@@ -11,12 +11,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.0.0"
+    "@nuxtjs/vuetify": "^1.12.3",
+    "axios": "^1.10.0",
+    "nuxt": "^2.0.0",
+    "vuetify": "^2.7.1"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
-    "autoprefixer": "^9.8.8",
-    "postcss": "8.4.31",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+    "@nuxtjs/tailwindcss": "^6.14.0"
   }
 }
