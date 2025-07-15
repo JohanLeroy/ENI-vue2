@@ -14,7 +14,7 @@ import axios from 'axios'
 
 export default {
   async asyncData({ params }) {
-    const { data } = await axios.get(`https://tyradex.vercel.app/api/v1/${params.id}`)
+    const { data } = await axios.get(`https://tyradex.vercel.app/api/v1/pokemon/${params.id}`)
     return { pokemon: data }
   }
 }
