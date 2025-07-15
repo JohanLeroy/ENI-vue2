@@ -2,10 +2,21 @@
   <v-btn-toggle
     v-model="internalSelected"
     mandatory
-    class="mb-4"
+    class="mb-4 overflow-x-auto flex no-scrollbar"
   >
-    <v-btn :value="0">Tout</v-btn>
-    <v-btn v-for="gen in generations" :key="gen" :value="gen">
+    <v-btn
+      :value="0"
+      class="flex-shrink-0 min-w-[80px] sm:min-w-[100px]"
+    >
+      Tout
+    </v-btn>
+
+    <v-btn
+      v-for="gen in generations"
+      :key="gen"
+      :value="gen"
+      class="flex-shrink-0 min-w-[80px] sm:min-w-[100px]"
+    >
       Génération {{ gen }}
     </v-btn>
   </v-btn-toggle>
@@ -37,3 +48,13 @@ export default {
   }
 }
 </script>
+
+<style>
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

@@ -98,7 +98,6 @@ export default {
 </script>
 
 <style scoped>
-/* Pour adapter la hauteur du carousel */
 .v-carousel-item img {
   object-fit: contain;
 }
