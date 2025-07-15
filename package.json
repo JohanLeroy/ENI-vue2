@@ -1,0 +1,22 @@
+{
+  "name": "ENI-vue2",
+  "version": "1.0.0",
+  "description": "Mon pokédex en nuxt 2",
+  "author": "JohanLeroy",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
+    "autoprefixer": "^9.8.8",
+    "postcss": "8.4.31",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+  }
+}
