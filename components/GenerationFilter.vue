@@ -1,33 +1,34 @@
 <template>
-  <v-select
-    :items="generations"
+  <v-btn-toggle
     v-model="internalSelected"
-    label="Filtrer par génération"
-    multiple
-  />
+    mandatory
+    class="mb-4"
+  >
+    <v-btn :value="0">Tout</v-btn>
+    <v-btn v-for="gen in generations" :key="gen" :value="gen">
+      Génération {{ gen }}
+    </v-btn>
+  </v-btn-toggle>
 </template>
 
 <script>
 export default {
   props: {
     selected: {
-      type: Array,
-      default: () => []
+      type: [Number],
+      default: 0
     }
   },
   data() {
     return {
-      generations: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      internalSelected: []
+      generations: [1,2,3,4,5,6,7,8,9],
+      internalSelected: this.selected
     }
-  },
-  created() {
-    this.internalSelected = this.selected.length ? [...this.selected] : [...this.generations]
   },
   watch: {
     selected(newVal) {
-      if (JSON.stringify(newVal) !== JSON.stringify(this.internalSelected)) {
-        this.internalSelected = [...newVal]
+      if(newVal !== this.internalSelected) {
+        this.internalSelected = newVal
       }
     },
     internalSelected(newVal) {
