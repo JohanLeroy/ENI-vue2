@@ -1,19 +1,16 @@
 <template>
-  <div class="p-4">
+  <div class="p-4" @scroll.passive="onScroll" ref="scrollContainer" style="height: 80vh; overflow-y: auto;">
     <GenerationFilter :selected="selectedGen" @change="onGenChange" />
-
     <v-container>
       <v-row>
-        <v-col cols="12" class="text-center" v-if="loading">
-          <v-progress-circular indeterminate color="primary" size="48" />
-        </v-col>
-
         <PokemonCard
-          v-for="poke in pokemons"
+          v-for="poke in displayedPokemons"
           :key="poke.pokedex_id"
           :pokemon="poke"
-          v-if="!loading"
         />
+        <v-col cols="12" class="text-center" v-if="loadingMore">
+          <v-progress-circular indeterminate color="primary" size="48" />
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -29,8 +26,13 @@ export default {
   data() {
     return {
       selectedGen: 0,
-      pokemons: [],
+      allPokemons: [],
+      displayedPokemons: [],
       loading: false,
+      loadingMore: false,
+      batchSize: 20,
+      offset: 0,
+      noMoreData: false,
     }
   },
   async mounted() {
@@ -42,21 +44,45 @@ export default {
       try {
         const res = await axios.get('https://tyradex.vercel.app/api/v1/pokemon')
         const all = res.data
-        if (this.selectedGen === 0) {
-          this.pokemons = all
-        } else {
-          this.pokemons = all.filter(p => p.generation === this.selectedGen)
-        }
+        this.allPokemons = this.selectedGen === 0 ? all : all.filter(p => p.generation === this.selectedGen)
+        this.offset = 0
+        this.noMoreData = false
+        this.displayedPokemons = []
+        this.loadMore()
       } catch (error) {
         console.error('Erreur lors du chargement des pokémons :', error)
-        this.pokemons = []
+        this.allPokemons = []
+        this.displayedPokemons = []
       } finally {
         this.loading = false
       }
     },
+    loadMore() {
+      if (this.noMoreData) return
+
+      this.loadingMore = true
+      setTimeout(() => {
+        const nextBatch = this.allPokemons.slice(this.offset, this.offset + this.batchSize)
+        this.displayedPokemons.push(...nextBatch)
+        this.offset += this.batchSize
+        if (this.offset >= this.allPokemons.length) {
+          this.noMoreData = true
+        }
+        this.loadingMore = false
+      }, 500)
+    },
     async onGenChange(gen) {
       this.selectedGen = gen
       await this.loadPokemons()
+    },
+    onScroll() {
+      const container = this.$refs.scrollContainer
+      if (!container) return
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 100) {
+        if (!this.loadingMore && !this.noMoreData) {
+          this.loadMore()
+        }
+      }
     }
   }
 }

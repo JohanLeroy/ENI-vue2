@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app color="deep-purple accent-4" dark>
-    <v-toolbar-title @click="$router.push('/')" class="text-white">Mon pokédex</v-toolbar-title>
+    <v-toolbar-title @click="$router.push('/')" class="text-white cursor-pointer">Mon pokédex</v-toolbar-title>
   </v-app-bar>
 </template>
 <script>
