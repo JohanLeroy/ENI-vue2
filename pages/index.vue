@@ -22,7 +22,6 @@ export default {
   components: { PokemonCard, GenerationFilter },
   data() {
     return {
-      // Toutes les générations par défaut, donc on montre tout au départ
       selectedGen: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       pokemons: [],
     }
